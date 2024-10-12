@@ -5,12 +5,13 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix = "sky.jwt")
+@ConfigurationProperties(prefix = "sky.jwt")//表示当前类是配置属性类 去application.yml中找
 @Data
 public class JwtProperties {
 
     /**
      * 管理端员工生成jwt令牌相关配置
+     * 读取application.yml封装成对象之后注入controller中
      */
     private String adminSecretKey;
     private long adminTtl;

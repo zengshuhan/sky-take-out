@@ -1,6 +1,7 @@
 package com.sky.controller.admin;
 
 import com.sky.constant.JwtClaimsConstant;
+import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.entity.Employee;
 import com.sky.properties.JwtProperties;
@@ -8,6 +9,8 @@ import com.sky.result.Result;
 import com.sky.service.EmployeeService;
 import com.sky.utils.JwtUtil;
 import com.sky.vo.EmployeeLoginVO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +27,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/admin/employee")
 @Slf4j
+@Api(tags = "员工相关接口")//swagger
 public class EmployeeController {
 
     @Autowired
@@ -38,6 +42,7 @@ public class EmployeeController {
      * @return
      */
     @PostMapping("/login")
+    @ApiOperation(value = "员工登录")//swagger
     public Result<EmployeeLoginVO> login(@RequestBody EmployeeLoginDTO employeeLoginDTO) {
         log.info("员工登录：{}", employeeLoginDTO);
 
@@ -51,6 +56,8 @@ public class EmployeeController {
                 jwtProperties.getAdminTtl(),
                 claims);
 
+        //利用builder()，和setter等效，此方式的setter方法名与属性名相同，构建java对象；
+        //使用builder()的前提，EmployeeLoginVO类必须有@Builder注解
         EmployeeLoginVO employeeLoginVO = EmployeeLoginVO.builder()
                 .id(employee.getId())
                 .userName(employee.getUsername())
@@ -58,7 +65,7 @@ public class EmployeeController {
                 .token(token)
                 .build();
 
-        return Result.success(employeeLoginVO);
+        return Result.success(employeeLoginVO);//将对象封装为res结果
     }
 
     /**
@@ -67,8 +74,19 @@ public class EmployeeController {
      * @return
      */
     @PostMapping("/logout")
+    @ApiOperation("员工登出")
     public Result<String> logout() {
         return Result.success();
     }
 
+    @ApiOperation("新增员工")
+    @PostMapping
+    public Result save(@RequestBody EmployeeDTO employeeDTO){//接收前端的json(@RequestBody)利用dto接收
+        log.info("新增员工:{}",employeeDTO);
+//        System.out.println("当前线程id："+Thread.currentThread().getId());
+        employeeService.save(employeeDTO);
+
+        return Result.success();
+
+    }
 }
