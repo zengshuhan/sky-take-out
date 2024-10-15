@@ -33,4 +33,6 @@ public interface EmployeeMapper {
      */
     //动态查询，使用mapper.xml映射
     Page<Employee> pageQuery(EmployeePageQueryDTO employeePageQueryDTO);
+
+    void update(Employee employee);
 }
