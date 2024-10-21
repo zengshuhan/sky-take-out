@@ -83,13 +83,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setStatus(StatusConstant.ENABLE);//1,常量类中的status
         //设置密码：新增员工默认密码123456
         employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
-        //设置创建时间和修改时间
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
-        //设置当前记录创建人id和修改人id[登录用户id]
-        Long id=BaseContext.getCurrentId();//利用localThread的独有的存储空间来传值
-        employee.setCreateUser(id);
-        employee.setUpdateUser(id);
+        //设置创建时间和修改时间aop
+//        employee.setCreateTime(LocalDateTime.now());
+//        employee.setUpdateTime(LocalDateTime.now());
+//        //设置当前记录创建人id和修改人id[登录用户id]
+//        Long id=BaseContext.getCurrentId();//利用localThread的独有的存储空间来传值
+//        employee.setCreateUser(id);
+//        employee.setUpdateUser(id);
 
         employeeMapper.insert(employee);
 
@@ -137,10 +137,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee=new Employee();
         //EmployeeDTO与Employee属性一致时可以使用属性拷贝
         BeanUtils.copyProperties(employeeDTO,employee);//source->target
-        employee.setUpdateTime(LocalDateTime.now());
-        //设置当前记录创建人id和修改人id[登录用户id]
-        Long id=BaseContext.getCurrentId();//利用localThread的独有的存储空间来传值
-        employee.setUpdateUser(id);
+        //aop
+//        employee.setUpdateTime(LocalDateTime.now());
+//        //设置当前记录创建人id和修改人id[登录用户id]
+//        Long id=BaseContext.getCurrentId();//利用localThread的独有的存储空间来传值
+//        employee.setUpdateUser(id);
         employeeMapper.update(employee);
     }
 
