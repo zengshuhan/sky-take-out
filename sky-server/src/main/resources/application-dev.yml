@@ -11,3 +11,7 @@ sky:
     access-key-id: LTAI5tKPcCVDvMsQTANgpxFc
     access-key-secret: cg9c6xobnLEnA9jqGFoQKLyQ1K18Uz
     bucket-name: sky-itcast-zeng
+  redis:
+    host: localhost
+    port: 6379
+    database: 10
