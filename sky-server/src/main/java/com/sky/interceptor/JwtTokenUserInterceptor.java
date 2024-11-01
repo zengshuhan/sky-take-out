@@ -49,7 +49,7 @@ public class JwtTokenUserInterceptor implements HandlerInterceptor {
         try {
             log.info("jwt校验:{}", token);
             Claims claims = JwtUtil.parseJWT(jwtProperties.getUserSecretKey(), token);
-            Long userId = Long.valueOf(claims.get(JwtClaimsConstant.EMP_ID).toString());//可以获得登录用户id
+            Long userId = Long.valueOf(claims.get(JwtClaimsConstant.USER_ID).toString());//可以获得登录用户id
             log.info("当前用户id：{}", userId);
             BaseContext.setCurrentId(userId);//利用localThread的独有的存储空间来传值
             //3、通过，放行
