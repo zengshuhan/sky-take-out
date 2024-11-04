@@ -170,7 +170,8 @@ public class WeChatPayUtil {
         JSONObject jsonObject = JSON.parseObject(bodyAsString);
         System.out.println(jsonObject);
 
-        String prepayId = jsonObject.getString("prepay_id");
+        String prepayId = "123456789";
+//        String prepayId = jsonObject.getString("prepay_id");
         if (prepayId != null) {
             String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
             String nonceStr = RandomStringUtils.randomNumeric(32);
@@ -189,6 +190,7 @@ public class WeChatPayUtil {
 
             Signature signature = Signature.getInstance("SHA256withRSA");
             signature.initSign(PemUtil.loadPrivateKey(new FileInputStream(new File(weChatProperties.getPrivateKeyFilePath()))));
+//            signature.initSign(PemUtil.loadPrivateKey(new FileInputStream(new File(weChatProperties.getPrivateKeyFilePath()))));
             signature.update(message);
             String packageSign = Base64.getEncoder().encodeToString(signature.sign());
 
